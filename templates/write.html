@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- og tag -->
+    <meta property="og:title" content="아무리뷰" />
+    <meta property="og:description" content="아무거나 리뷰하고 가세요!" />
+    <meta property="og:image" content="https://whatever.co/index/OGimage.png" />
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="https://item.kakaocdn.net/do/57282cd5bee7a66ab3c7e72c7d69acf8f604e7b0e6900f9ac53a43965300eb9a" type="image/x-icon">
+
+    <title>아무리뷰 | 아무거나 리뷰하는 소셜 플랫폼 </title>
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="{{ url_for('static', filename='myjs.js') }}"></script>
+    <!-- Bulma -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <!-- font awesome -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- css -->
+    <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
+
+    <style>
+
+    </style>
+
+    <script>
+        $(document).ready(function () {
+
+        });
+
+        function post_board() {
+            let title = $('#review_title').val()
+            let content = $('#review_content').val()
+            let date = new Date().toISOString()
+            let file = $('#review_image')[0].files[0]
+
+            console.log(title, content, date, file)
+
+            let form_data = new FormData()
+            form_data.append('title_give', title)
+            form_data.append('content_give', content)
+            form_data.append('date_give', date)
+            form_data.append('file_give', file)
+
+
+            $.ajax({
+              type: "POST",
+              url: "/api/post_board",
+              data: form_data,
+              cache: false,
+              contentType: false,
+              processData: false,
+              success: function(response){
+                if (response['result'] == 'success') {
+                    alert(response['msg'])
+                    window.location.href="/"
+                }
+              }
+            });
+        }
+
+    </script>
+</head>
+<body class="has-navbar-fixed-top">
+    <!-- navbar -->
+    <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
+        <!-- navbar logo-->
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <img src="{{ url_for('static', filename='logo.png') }}">
+            </a>
+        </div>
+        <!-- navbar menu-->
+        <div class="navbar-menu">
+            <!-- navbar end-->
+            <div class="navbar-end">
+              <!-- navbar button-->
+                <a class="button is-primary" href="/api/write/{{ user_info.username }}">
+                  <strong>리뷰 쓰기</strong>
+                </a>
+              <!-- navbar item dropdown -->
+              <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                  {{ user_info.username }}
+                </a>
+
+                <div class="navbar-dropdown is-right">
+                  <a class="navbar-item" href="/user/{{ user_info.username }}">
+                    내 프로필
+                  </a>
+                  <a class="navbar-item" onclick="sign_out()">
+                    로그아웃
+                  </a>
+                </div>
+              </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- title section -->
+    <section class="hero is-primary is-bold is-medium has-background"> <!-- has-background 추가 -->
+        <img class="hero-background is-transparent" src="/static/hero_pic.png" alt="hero_pic"> <!-- is-background 추가 -->
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    아무리뷰
+                </h1>
+                <h2 class="subtitle">
+                    아무거나 리뷰하세요!
+                </h2>
+            </div>
+        </div>
+    </section>
+    <!-- body section -->
+    <section class="section">
+        <div class="container">
+            <h1 class="title">리뷰 적기</h1>
+            <h2 class="subtitle">
+                아무 리뷰나 <strong>가감없이</strong> 적어주세요!
+            </h2>
+            <!-- review title -->
+            <input id="review_title" class="input" type="text" placeholder="리뷰 제목">
+            <!-- review content -->
+            <textarea id="review_content" class="textarea" placeholder="리뷰 내용" rows="10"></textarea>
+            <!-- image upload -->
+            <div class="control is-expanded">
+                <div class="file has-name">
+                    <label class="file-label" style="width:100%">
+                        <input id="review_image" class="file-input" type="file"
+                               name="resume">
+                        <span class="file-cta"><span class="file-icon"><i
+                                class="fa fa-upload"></i></span>
+                    <span class="file-label">썸네일 선택</span>
+                </span>
+                        <span id="file-name" class="file-name"
+                              style="width:100%;max-width:100%">가장 마지막으로 업로드한 사진이 썸네일로 올라갑니다!</span> <!-- 파일을 업로드하면 파일 이름을 출력시킬 것! -->
+                    </label>
+                </div>
+            </div>
+            <!-- review done button -->
+            <button onclick="post_board()" class="button is-info">리뷰 등록</button>
+        </div>
+    </section>
+    <!-- body section ends here -->
+</body>
+<!-- footer -->
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      <strong>항해99 8기_a 5조 풀스택 미니프로젝트</strong> by 김성호, 강유나, 전태훈, 최준우. The source code is licensed
+      항해99. The website content
+      is licensed CC BY NC SA 4.0.
+    </p>
+  </div>
+</footer>
+</html>

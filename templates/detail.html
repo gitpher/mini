@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- og tag -->
+    <meta property="og:title" content="아무리뷰" />
+    <meta property="og:description" content="아무거나 리뷰하고 가세요!" />
+    <meta property="og:image" content="https://whatever.co/index/OGimage.png" />
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="https://item.kakaocdn.net/do/57282cd5bee7a66ab3c7e72c7d69acf8f604e7b0e6900f9ac53a43965300eb9a" type="image/x-icon">
+
+    <title>아무리뷰 | 아무거나 리뷰하는 소셜 플랫폼 </title>
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="{{ url_for('static', filename='myjs.js') }}"></script>
+    <!-- Bulma -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <!-- font awesome -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- css -->
+    <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet">
+
+    <style>
+
+    </style>
+    <script>
+        $(document).ready(function () { <!-- 여기도 봐야함! -->
+
+        });
+
+    </script>
+</head>
+<body class="has-navbar-fixed-top">
+    <!-- navbar -->
+    <nav class="navbar is-fixed-top is-white" role="navigation" aria-label="main navigation">
+        <!-- navbar logo-->
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <img src="{{ url_for('static', filename='logo.png') }}">
+            </a>
+        </div>
+        <!-- navbar menu-->
+        <div class="navbar-menu">
+            <!-- navbar end-->
+            <div class="navbar-end">
+              <!-- navbar button-->
+                <a class="button is-primary" href="/api/write/{{ user_info.username }}">
+                  <strong>리뷰 쓰기</strong>
+                </a>
+              <!-- navbar item dropdown -->
+              <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                  {{ user_info.username }}
+                </a>
+
+                <div class="navbar-dropdown is-right">
+                  <a class="navbar-item" href="/user/{{ user_info.username }}">
+                    내 프로필
+                  </a>
+                  <a class="navbar-item" onclick="sign_out()">
+                    로그아웃
+                  </a>
+                </div>
+              </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- title section -->
+    <section class="hero is-primary is-bold is-medium has-background"> <!-- has-background 추가 -->
+        <img class="hero-background is-transparent" src="/static/hero_pic.png" alt="hero_pic"> <!-- is-background 추가 -->
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    아무리뷰
+                </h1>
+                <h2 class="subtitle">
+                    아무거나 리뷰하세요!
+                </h2>
+            </div>
+        </div>
+    </section>
+    <!-- body section -->
+    <section class="section">
+        <div class="container">
+            <div class="boards-box">
+                <!-- 여기에 출력 -->
+                <div id="{{ board._id }}" class="box">
+                    <article class="media">
+                        <div class="media-left">
+                            <figure class="image is-128x128 is-square">
+                                <img src="/static/pics/{{ board.thumbnail_pic_real }}" alt="Image">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <strong>{{ board.title }}</strong> <small>@{{ board.username }}</small> <small>{{ board.date[0:10] }} {{ board.date[11:16] }}</small> <!--여기 사이에 date 들어감-->
+                                    <br>
+                                    {{ board.content }}
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- body section ends here -->
+</body>
+<!-- footer -->
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      <strong>항해99 8기_a 5조 풀스택 미니프로젝트</strong> by 김성호, 강유나, 전태훈, 최준우. The source code is licensed
+      항해99. The website content
+      is licensed CC BY NC SA 4.0.
+    </p>
+  </div>
+</footer>
+</html>

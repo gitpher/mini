@@ -1,0 +1,30 @@
+* {
+    font-family: 'Gowun Dodum', sans-serif;
+}
+.navbar-end > .button {
+    align-items: center;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+.is-sparta {
+    color: #00d1b2 !important;
+}
+
+.button.is-sparta {
+    background-color: #00d1b2;
+    border-color: transparent;
+    color: #fff !important;
+}
+.hero.has-background {
+    position: relative;
+    overflow: hidden;
+}
+.hero-background {
+    position: absolute;
+    object-position: center center;
+    width: 100%;
+    height: 100%;
+}
+.hero-background.is-transparent {
+    opacity: 0.3;
+}
